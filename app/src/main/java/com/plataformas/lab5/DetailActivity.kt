@@ -44,12 +44,12 @@ class DetailActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Lab5Theme {
-                Scaffold(modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.background)) { innerPadding ->
-                    MainLayout3(
-                        modifier = Modifier.padding(innerPadding),
-                        event = eventos[0]
-                    )
+                NavigationDrawerScreen("TodoEventos",this) {
+                    Scaffold(modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.background)) { innerPadding ->
+                        MainLayout3(event = eventos[0])
+                    }
                 }
+
             }
         }
     }

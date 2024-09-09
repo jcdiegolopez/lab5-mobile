@@ -42,13 +42,16 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Lab5Theme {
-                Scaffold(modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = MaterialTheme.colorScheme.primary)) { innerPadding ->
-                    MainLayout(
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                NavigationDrawerScreen("TodoEventos",this) {
+                    Scaffold(modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = MaterialTheme.colorScheme.primary)) { innerPadding ->
+                        MainLayout(
+
+                        )
+                    }
                 }
+
             }
         }
     }
@@ -60,27 +63,7 @@ fun MainLayout(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxSize()
     ) {
-        Row(
-            modifier = Modifier
-                .height(56.dp)
-                .fillMaxWidth().background(color = MaterialTheme.colorScheme.secondary),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
-        ) {
-            Text(
-                text = "TodoEventos",
-                fontSize = 20.sp,
-                color = colorResource(R.color.black),
-                modifier = Modifier.padding(start = 16.dp),
-                fontWeight = FontWeight.Bold
 
-            )
-            Image(
-                painter = painterResource(R.drawable.baseline_menu_24),
-                contentDescription = "menu",
-                modifier = Modifier.size(24.dp).padding(end = 16.dp)
-            )
-        }
         EventGrid()
 
 

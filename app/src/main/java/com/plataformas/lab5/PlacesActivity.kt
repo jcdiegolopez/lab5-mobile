@@ -41,12 +41,14 @@ class PlacesActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Lab5Theme {
-                Scaffold(modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = MaterialTheme.colorScheme.primary)) { innerPadding ->
-                    MainLayout2(
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                NavigationDrawerScreen("TodoEventos",this) {
+                    Scaffold(modifier = Modifier
+                        .fillMaxSize()
+                        .background(color = MaterialTheme.colorScheme.primary)) { innerPadding ->
+                        MainLayout2(
+
+                        )
+                    }
                 }
             }
         }

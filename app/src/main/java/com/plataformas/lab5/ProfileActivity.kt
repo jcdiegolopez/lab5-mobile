@@ -49,18 +49,19 @@ class ProfileActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             Lab5Theme {
-                Scaffold(modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.background)) { innerPadding ->
-                    MainLayout4(
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                NavigationDrawerScreen("TodoEventos",this) {
+                    Scaffold(modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.background)) { innerPadding ->
+                        MainLayout4()
+                    }
                 }
+
             }
         }
     }
 }
 
 @Composable
-fun MainLayout4(modifier: Modifier) {
+fun MainLayout4(modifier: Modifier = Modifier) {
     var notificationsEnabled by remember { mutableStateOf(false) }
 
     Column(
