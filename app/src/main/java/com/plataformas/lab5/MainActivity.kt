@@ -86,7 +86,7 @@ fun EventCard(evento: Event,onClick: () -> Unit) {
 
     ) {
         Image(
-            painter = painterResource(R.drawable.ic_launcher_background),
+            painter = painterResource(evento.imagenUrl),
             contentDescription = "Event Image",
             modifier = Modifier
                 .fillMaxWidth()

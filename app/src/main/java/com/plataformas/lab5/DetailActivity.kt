@@ -28,6 +28,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,10 +45,11 @@ class DetailActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val eventId = intent.getIntExtra("eventId", -1)
             Lab5Theme {
                 NavigationDrawerScreen("TodoEventos",this) {
                     Scaffold(modifier = Modifier.fillMaxSize().background(color = MaterialTheme.colorScheme.background)) { innerPadding ->
-                        MainLayout3(event = eventos[0])
+                        eventos.find { it.id == eventId }?.let { it1 -> MainLayout3(event = it1) }
                     }
                 }
 
@@ -57,6 +60,12 @@ class DetailActivity : ComponentActivity() {
 
 @Composable
 fun MainLayout3(modifier: Modifier = Modifier, event: Event) {
+    var isFavorite = remember { mutableStateOf(event.favorite) }
+    fun onFavorite() {
+        event.favorite = !event.favorite
+        isFavorite.value = !isFavorite.value
+
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -148,10 +157,12 @@ fun MainLayout3(modifier: Modifier = Modifier, event: Event) {
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 FilledTonalButton(
-                    onClick = { /* Acción de "Favorite" */ },
+                    onClick = {
+                        onFavorite()
+                    },
                     modifier = Modifier.weight(1f)
                 ) {
-                    Text(text = "Favorite")
+                    Text(text = if (isFavorite.value) "Quitar favorito" else "Favorito")
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 FilledTonalButton(
