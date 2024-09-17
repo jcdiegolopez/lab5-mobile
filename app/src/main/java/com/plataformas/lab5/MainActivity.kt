@@ -1,5 +1,6 @@
 package com.plataformas.lab5
 
+import android.content.Intent
 import android.content.res.Resources.Theme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,6 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,6 +30,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -71,18 +74,19 @@ fun MainLayout(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun EventCard(evento: Event) {
+fun EventCard(evento: Event,onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .padding(0.dp)
             .background(
                 color = MaterialTheme.colorScheme.primary,
                 shape = RoundedCornerShape(16.dp)
-            )
+            ).
+            clickable( onClick = onClick )
 
     ) {
         Image(
-            painter = painterResource(R.drawable.ic_launcher_background),
+            painter = painterResource(evento.imagenUrl),
             contentDescription = "Event Image",
             modifier = Modifier
                 .fillMaxWidth()
@@ -115,6 +119,7 @@ fun EventCard(evento: Event) {
 
 @Composable
 fun EventGrid() {
+    val context = LocalContext.current
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -134,7 +139,12 @@ fun EventGrid() {
                 )
             }
             items(eventos.filter { it.favorite }) { evento ->
-                    EventCard(evento)
+                    EventCard(evento){
+                        val intent = Intent(context, DetailActivity::class.java).apply{
+                            putExtra("eventId",evento.id)
+                        }
+                        context.startActivity(intent)
+                    }
             }
             item(span = { GridItemSpan(maxLineSpan) }) {
                 Text(
@@ -145,7 +155,12 @@ fun EventGrid() {
             }
             items(eventos.filter { !it.favorite }) { evento ->
 
-                EventCard(evento)
+                EventCard(evento){
+                    val intent = Intent(context, DetailActivity::class.java).apply{
+                        putExtra("eventId",evento.id)
+                    }
+                    context.startActivity(intent)
+                }
 
             }
         }
